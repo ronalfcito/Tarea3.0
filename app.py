@@ -1,3 +1,5 @@
+import sys
+
 def suma(a, b):
     return a + b
 
@@ -25,28 +27,28 @@ def mostrar_menu():
         print(f"{key}. {nombre}")
     print("5. Salir")
 
-def main():
+def modo_interactivo():
     while True:
         mostrar_menu()
         try:
             opcion = int(input("Ingrese el número de la operación: "))
         except ValueError:
-            print("❌ Entrada inválida. Debe ser un número.")
+            print(" Entrada inválida. Debe ser un número.")
             continue
 
         if opcion == 5:
-            print("✅ Gracias por usar la calculadora. ¡Hasta luego!")
+            print(" Gracias por usar la calculadora. ¡Hasta luego!")
             break
 
         if opcion not in OPERACIONES:
-            print("❌ Opción no válida. Intente de nuevo.")
+            print(" Opción no válida. Intente de nuevo.")
             continue
 
         try:
             a = float(input("Ingrese el primer número: "))
             b = float(input("Ingrese el segundo número: "))
         except ValueError:
-            print("❌ Entrada inválida. Debe ser un número.")
+            print(" Entrada inválida. Debe ser un número.")
             continue
 
         nombre, funcion = OPERACIONES[opcion]
@@ -56,5 +58,37 @@ def main():
         else:
             print(f" Resultado de la {nombre}: {resultado:.2f}")
 
+def modo_automatico():
+    if len(sys.argv) < 4:
+        print("Uso: python app.py <operacion> <a> <b>")
+        print("Operaciones disponibles: suma, resta, multiplicacion, division")
+        return
+
+    operacion = sys.argv[1].lower()
+    try:
+        a = float(sys.argv[2])
+        b = float(sys.argv[3])
+    except ValueError:
+        print(" Los números deben ser válidos.")
+        return
+
+    funciones = {
+        "suma": suma,
+        "resta": resta,
+        "multiplicacion": multiplicacion,
+        "division": division,
+    }
+
+    if operacion not in funciones:
+        print(" Operación no válida.")
+        return
+
+    resultado = funciones[operacion](a, b)
+    print(f" Resultado de la {operacion}: {resultado}")
+
 if __name__ == "__main__":
-    main()
+    # Si se pasan argumentos, usa modo automático
+    if len(sys.argv) > 1:
+        modo_automatico()
+    else:
+        modo_interactivo()

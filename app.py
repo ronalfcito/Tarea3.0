@@ -1,18 +1,9 @@
 import sys
 
-def suma(a, b):
-    return a + b
-
-def resta(a, b):
-    return a - b
-
-def multiplicacion(a, b):
-    return a * b
-
-def division(a, b):
-    if b == 0:
-        return "Error: división por cero"
-    return a / b
+def suma(a, b): return a + b
+def resta(a, b): return a - b
+def multiplicacion(a, b): return a * b
+def division(a, b): return "Error: división por cero" if b == 0 else a / b
 
 OPERACIONES = {
     1: ("Suma", suma),
@@ -53,10 +44,7 @@ def modo_interactivo():
 
         nombre, funcion = OPERACIONES[opcion]
         resultado = funcion(a, b)
-        if isinstance(resultado, str):  # caso de error en división
-            print(resultado)
-        else:
-            print(f" Resultado de la {nombre}: {resultado:.2f}")
+        print(f" Resultado de la {nombre}: {resultado:.2f}" if not isinstance(resultado, str) else resultado)
 
 def modo_automatico():
     if len(sys.argv) < 4:
@@ -84,7 +72,7 @@ def modo_automatico():
         return
 
     resultado = funciones[operacion](a, b)
-    print(f" Resultado de la {operacion}: {resultado}")
+    print(f" Resultado de la {operacion}: {resultado}" if not isinstance(resultado, str) else resultado)
 
 if __name__ == "__main__":
     # Si se pasan argumentos, usa modo automático

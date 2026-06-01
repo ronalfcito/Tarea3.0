@@ -24,22 +24,22 @@ def modo_interactivo():
         try:
             opcion = int(input("Ingrese el número de la operación: "))
         except ValueError:
-            print(" Entrada inválida. Debe ser un número.")
+            print("❌ Entrada inválida. Debe ser un número.")
             continue
 
         if opcion == 5:
-            print(" Gracias por usar la calculadora. ¡Hasta luego!")
+            print("✅ Gracias por usar la calculadora. ¡Hasta luego!")
             break
 
         if opcion not in OPERACIONES:
-            print(" Opción no válida. Intente de nuevo.")
+            print("❌ Opción no válida. Intente de nuevo.")
             continue
 
         try:
             a = float(input("Ingrese el primer número: "))
             b = float(input("Ingrese el segundo número: "))
         except ValueError:
-            print(" Entrada inválida. Debe ser un número.")
+            print("❌ Entrada inválida. Debe ser un número.")
             continue
 
         nombre, funcion = OPERACIONES[opcion]
@@ -57,7 +57,7 @@ def modo_automatico():
         a = float(sys.argv[2])
         b = float(sys.argv[3])
     except ValueError:
-        print(" Los números deben ser válidos.")
+        print("❌ Los números deben ser válidos.")
         return
 
     funciones = {
@@ -68,14 +68,14 @@ def modo_automatico():
     }
 
     if operacion not in funciones:
-        print(" Operación no válida.")
+        print("❌ Operación no válida.")
         return
 
     resultado = funciones[operacion](a, b)
     print(f" Resultado de la {operacion}: {resultado}" if not isinstance(resultado, str) else resultado)
 
 if __name__ == "__main__":
-    # Si se pasan argumentos, usa modo automático
+    # Si hay argumentos, usa modo automático (para CI/CD o Docker)
     if len(sys.argv) > 1:
         modo_automatico()
     else:

@@ -13,41 +13,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Descargar el código fuente
     - uses: actions/checkout@v4
 
-    # 2. Configurar Python
     - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
 
-    # 3. Instalar dependencias
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
         pip install pytest
 
-    # 4. Ejecutar la aplicación
-    - name: Ejecutar la app
-      run: python app.py
+    - name: Ejecutar la app (modo automático)
+      run: python app.py suma 5 3
 
-    # 5. Ejecutar pruebas automatizadas
     - name: Test with pytest
       run: pytest
 
-    # 6. Simulación de despliegue
     - name: Simulación del deploy
       run: echo "Simulando despliegue en servidor..."
 
-    # 7. Construir la imagen Docker
     - name: Construir imagen Docker
-      run: docker build -t ghcr.io/ronalfcito/ejercicio:3.0.0 .
+      run: docker build -t ghcr.io/ronaldcito/ejercicio:3.0.0 .
 
-    # 8. Login en GitHub Container Registry
     - name: Login en GitHub Container Registry
       run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    # 9. Publicar la imagen
     - name: Publicar imagen
-      run: docker push ghcr.io/ronalfcito/ejercicio:3.0.0
+      run: docker push ghcr.io/ronaldcito/ejercicio:3.0.0
